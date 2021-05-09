@@ -36,7 +36,7 @@ if output_pin is None:
 
 
 def main():
-    pwm_freq = 80000
+    pwm_freq = 30000
     # Pin Setup:
     # Board pin-numbering scheme
     GPIO.setmode(GPIO.BOARD)
@@ -51,8 +51,10 @@ def main():
     try:
         while True:
             print("PWM running. Press CTRL+C to exit.",pwm_freq)
-            pwm_freq=int(input("enter frequency:"))
+            pwm_freq=int(input("Enter frequency:"))
+            val=int(input("Enter duty cycle in Percent:"))
             p.ChangeFrequency(pwm_freq)
+            p.ChangeDutyCycle(val)
             time.sleep(0.25)
            # if val >= 100:
              #   incr = -incr
