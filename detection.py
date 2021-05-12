@@ -40,20 +40,22 @@ def microwave(channel):
 def main():
     # Pin Setup:
     GPIO.setmode(GPIO.BOARD)  # BOARD pin-numbering scheme
-    
-    GPIO.setup([pir_pin, mic_pin], GPIO.IN)  
-    
-
-
+    GPIO.setup(pir_pin, GPIO.IN)
+    GPIO.setup(mic_pin, GPIO.IN)
     GPIO.add_event_detect(pir_pin, GPIO.RISING, callback=pir, bouncetime=10)
-    GPIO.add_event_detect(mic_pin, GPIO.RISING, callback=microwave, bouncetime=10)
-    
+    #GPIO.add_event_detect(mic_pin, GPIO.RISING, callback=microwave, bouncetime=1)
+
     print("Starting now! Press CTRL+C to exit")
     try:
         while True:
-            time.sleep(2)
+            print(">>>>>>>>>>>>>>>>>>>>........>>>>>>>>>>>>>>>>>>\n")
+            microwave_flag = GPIO.input(mic_pin)
+            if microwave_flag==GPIO.HIGH:
+                print("microwave detected") 
+            else: 
+                print("                  ")
+            time.sleep(1)
     finally:
-        GPIO.cleanup()  # cleanup all GPIOs
-
+        GPIO.cleanup()
 if __name__ == '__main__':
     main()
