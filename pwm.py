@@ -22,17 +22,9 @@
 import RPi.GPIO as GPIO
 import time
 
-output_pins = {
-    'JETSON_XAVIER': 18,
-    'JETSON_NANO': 33,
-    'JETSON_NX': 33,
-    'CLARA_AGX_XAVIER': 18,
-    'JETSON_TX2_NX': 32,
-}
+pwm_pin=33
 
-output_pin = output_pins.get(GPIO.model, None)
-if output_pin is None:
-    raise Exception('PWM not supported on this board')
+
 
 
 def main():
@@ -41,29 +33,24 @@ def main():
     # Board pin-numbering scheme
     GPIO.setmode(GPIO.BOARD)
     # set pin as an output pin with optional initial state of HIGH
-    GPIO.setup(output_pin, GPIO.OUT, initial=GPIO.HIGH)
-    p = GPIO.PWM(output_pin, pwm_freq)
+
+    GPIO.setup(pwm_pin, GPIO.OUT, initial=GPIO.HIGH)
+    pwm = GPIO.PWM(pwm_pin, pwm_freq)
     val = 50
-    incr = 5
-    p.start(val)
+    pwm.start(val)
 
     
     try:
         while True:
             print("PWM running. Press CTRL+C to exit.",pwm_freq)
             pwm_freq=int(input("Enter frequency:"))
-            val=int(input("Enter duty cycle in Percent:"))
-            p.ChangeFrequency(pwm_freq)
-            p.ChangeDutyCycle(val)
+            #val=int(input("Enter duty cycle in Percent:"))
+            pwm.ChangeFrequency(pwm_freq)
+            #pwm.ChangeDutyCycle(val)
             time.sleep(0.25)
-           # if val >= 100:
-             #   incr = -incr
-            #if val <= 0:
-            #    incr = -incr
-            #val += incr
-            #p.ChangeDutyCycle(val)
+
     finally:
-        p.stop()
+        pwm.stop()
         GPIO.cleanup()
 
 if __name__ == '__main__':

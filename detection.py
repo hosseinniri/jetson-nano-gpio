@@ -22,30 +22,38 @@
 import RPi.GPIO as GPIO
 import time
 
-# Pin Definitions
-output_pin = 18  # BCM pin 18, BOARD pin 12
+# Pin Definitions:
+pir_pin = 12
+mic_pin = 13
 
+
+# blink LED 2 quickly 5 times when button pressed
+def pir(channel):
+    print("pir detected")
+    pir_flag=1
+
+
+def microwave(channel):
+    print("microwave detected")
+    microwave_flag=1
+ 
 def main():
     # Pin Setup:
-    GPIO.setmode(GPIO.BCM)  # BCM pin-numbering scheme from Raspberry Pi
-    # set pin as an output pin with optional initial state of HIGH
-    GPIO.setup(output_pin, GPIO.OUT, initial=GPIO.LOW)
+    GPIO.setmode(GPIO.BOARD)  # BOARD pin-numbering scheme
+    
+    GPIO.setup([pir_pin, mic_pin], GPIO.IN)  
+    
 
-    print("Starting demo now! Press CTRL+C to exit")
-    #curr_value = GPIO.HIGH
+
+    GPIO.add_event_detect(pir_pin, GPIO.RISING, callback=pir, bouncetime=10)
+    GPIO.add_event_detect(mic_pin, GPIO.RISING, callback=microwave, bouncetime=10)
+    
+    print("Starting now! Press CTRL+C to exit")
     try:
         while True:
-            
-            curr_value = GPIO.LOW
-            GPIO.output(output_pin, curr_value)
-            time.sleep(1)
-            # Toggle the output every second
-            #print("Outputting {} to pin {}".format(curr_value, output_pin)
-            curr_value = GPIO.HIGH
-            GPIO.output(output_pin, curr_value)
-           
+            time.sleep(2)
     finally:
-        GPIO.cleanup()
+        GPIO.cleanup()  # cleanup all GPIOs
 
 if __name__ == '__main__':
     main()
