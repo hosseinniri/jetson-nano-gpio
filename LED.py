@@ -15,9 +15,9 @@ print("Press CTRL+C when you want the LED to stop blinking")
  
 # Blink the LED
 while True: 
-  time.sleep(10) 
+  time.sleep(2) 
   GPIO.output(led_pin, GPIO.HIGH) 
   print("LED is ON")
-  time.sleep(10) 
+  time.sleep(1) 
   GPIO.output(led_pin, GPIO.LOW)
   print("LED is OFF")
