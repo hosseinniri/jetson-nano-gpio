@@ -11,4 +11,5 @@ write on/off state on pin for toggleing headlight led using mosfet with driver c
 # Digital input 
 Read state of 2 pin output of PIR and microwave motion detector sensor.
 
-# play music with pygame module and usb sound card
+# play music
+play music with pygame module and usb sound card
