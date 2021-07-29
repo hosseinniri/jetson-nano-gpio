@@ -13,3 +13,5 @@ Read state of 2 pin output of PIR and microwave motion detector sensor.
 
 # play music
 play music with playsound module and usb sound card
+
+## ***** ##
